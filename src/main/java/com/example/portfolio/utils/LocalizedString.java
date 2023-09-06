@@ -11,7 +11,7 @@ import java.util.Objects;
 public class LocalizedString {
     private static final Logger logger = LoggerFactory.getLogger(LocalizedString.class);
 
-    private  Map<Locale, String> translations = new HashMap<>();
+    private Map<Locale, String> translations = new HashMap<>();
     private String fallbackText;
 
     public Map<Locale, String> getTranslations() {

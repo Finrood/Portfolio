@@ -6,6 +6,7 @@ import com.example.portfolio.model.Project;
 import com.example.portfolio.model.Technology;
 import com.example.portfolio.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,15 +18,18 @@ public class ProjectManager {
         this.projectRepository = projectRepository;
     }
 
+    @Transactional(readOnly = true)
     public Project getProject(String projectId) {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Project with id [%s] not found", projectId)));
     }
 
+    @Transactional(readOnly = true)
     public List<Project> getAllProject() {
         return projectRepository.findAll();
     }
 
+    @Transactional
     public Project createProject(ProjectDto projectDto) {
         return new Project(projectDto.getTitle(), projectDto.getStartYear())
                 .setDescription(projectDto.getDescription())

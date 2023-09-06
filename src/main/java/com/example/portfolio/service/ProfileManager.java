@@ -4,15 +4,17 @@ import com.example.portfolio.controller.support.ResourceNotFoundException;
 import com.example.portfolio.model.Profile;
 import com.example.portfolio.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProfileManager {
-    private  final ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
     public ProfileManager(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 
+    @Transactional(readOnly = true)
     public Profile getProfile(String email) {
         return profileRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("No profile with email [%s] was found", email)));
