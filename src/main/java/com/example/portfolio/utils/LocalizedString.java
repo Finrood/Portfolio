@@ -33,7 +33,7 @@ public class LocalizedString {
     }
 
     public boolean hasAnyTranslation() {
-        return translations.isEmpty();
+        return ! translations.isEmpty();
     }
 
     @Override
@@ -51,8 +51,11 @@ public class LocalizedString {
 
     @Override
     public String toString() {
-        return "LocalizedString{" +
-                "translations=" + translations +
-                '}';
+        final StringBuilder stringBuilder = new StringBuilder();
+        translations.forEach((key, value) -> stringBuilder.append(
+                String.format("{\"%s\": \"%s\"}",
+                        key.toLanguageTag(),
+                        value)));
+        return stringBuilder.toString();
     }
 }

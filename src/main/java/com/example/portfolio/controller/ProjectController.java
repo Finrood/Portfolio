@@ -28,7 +28,7 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project/create")
-    public ProjectDto getProject(@RequestBody ProjectDto projectDto) {
+    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
         return toDto(projectManager.createProject(projectDto));
     }
 
