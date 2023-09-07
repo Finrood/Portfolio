@@ -8,12 +8,12 @@ import com.example.portfolio.repository.ProjectRepository;
 import com.example.portfolio.utils.LocalizedString;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +46,7 @@ class ProjectControllerTest {
     private ProjectRepository projectRepository;
 
     public ProjectControllerTest() {
-        objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        objectMapper = new ObjectMapper();
     }
 
     @PostConstruct
@@ -64,15 +64,15 @@ class ProjectControllerTest {
                                Locale.ENGLISH, "title1",
                                Locale.FRENCH, "titre1")
                ),
-               Year.of(2000))
+               "2000")
                .setDescription(new LocalizedString().setTranslations(
                        Map.of(
                                Locale.ENGLISH, "descren1",
                                Locale.FRENCH, "descrfr1")
                ))
                .setGithubUrl("www.gittest.com/project1")
-               .setEndYear(Year.of(2001))
-               .addTechnologies(Technology.JAVA, Technology.AI, Technology.SQL));
+               .setEndYear("2001"))
+               .addTechnologies(Technology.JAVA, Technology.AI, Technology.SQL);
 
         final Project savedP2 = projectRepository.save(new Project(
                 new LocalizedString().setTranslations(
@@ -80,7 +80,7 @@ class ProjectControllerTest {
                                 Locale.ENGLISH, "title2",
                                 Locale.FRENCH, "titre2")
                 ),
-                Year.of(2001))
+                "2001")
                 .setDescription(new LocalizedString().setTranslations(
                         Map.of(
                                 Locale.ENGLISH, "descren2",
@@ -89,14 +89,14 @@ class ProjectControllerTest {
                 .setGithubUrl("www.gittest.com/project2")
                 .addTechnologies(Technology.PYTHON));
 
-        final Project savedP3= projectRepository.save(new Project(new LocalizedString().setFallbackText("title3"), Year.of(2002))
+        final Project savedP3= projectRepository.save(new Project(new LocalizedString().setFallbackText("title3"), "2002")
                 .setDescription(new LocalizedString().setTranslations(
                         Map.of(
                                 Locale.ENGLISH, "descren3",
                                 Locale.FRENCH, "descrfr3")
                 ))
                 .setGithubUrl("www.gittest.com/project3")
-                .setEndYear(Year.of(2003))
+                .setEndYear("2003")
                 .addTechnologies(Technology.JAVA, Technology.AI));
 
         savedProjects.add(savedP1);
@@ -146,5 +146,45 @@ class ProjectControllerTest {
     public void getProjectNotExists() throws Exception {
         mockMvc.perform(get("/project/{projectId}", "notAnId"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    public void createProjectWithAllAttributes() throws Exception {
+        final ProjectDto projectDto = new ProjectDto()
+                .setTitle(new LocalizedString().setTranslations(Map.of(Locale.ENGLISH, "testen", Locale.FRENCH, "testfr")))
+                .setDescription(new LocalizedString().setFallbackText("description fallback"))
+                .setStartYear("2000")
+                .setEndYear("2000")
+                .setGithubUrl("test@gittest.com")
+                .setTechnologies(List.of(Technology.AI, Technology.JAVA, Technology.PYTHON));
+
+        final ResultActions mvcResult = mockMvc.perform(post("/project/create")
+                        .content(objectMapper.writeValueAsString(projectDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        final ProjectDto savedProjectDto = objectMapper.readValue(mvcResult.andReturn().getResponse().getContentAsString(), ProjectDto.class);
+
+        assertThat(savedProjectDto).isNotNull();
+        assertThat(savedProjectDto.getId()).isNotNull();
+        assertThat(projectRepository.findById(savedProjectDto.getId())).isNotEmpty();
+
+        final Project savedProject = projectRepository.findById(savedProjectDto.getId()).get();
+
+        assertThat(savedProjectDto.getGithubUrl()).isEqualTo(projectDto.getGithubUrl());
+        assertThat(savedProjectDto.getStartYear()).isEqualTo(projectDto.getStartYear());
+        assertThat(savedProjectDto.getEndYear()).isEqualTo(projectDto.getEndYear());
+        assertThat(savedProjectDto.getTechnologies()).isEqualTo(projectDto.getTechnologies());
+        assertThat(savedProjectDto.getTitle()).isEqualTo(projectDto.getTitle());
+        assertThat(savedProjectDto.getDescription()).isEqualTo(projectDto.getDescription());
+
+        assertThat(savedProjectDto.getId()).isEqualTo(savedProject.getId());
+        assertThat(savedProjectDto.getGithubUrl()).isEqualTo(savedProject.getGithubUrl());
+        assertThat(savedProjectDto.getStartYear()).isEqualTo(savedProject.getStartYear());
+        assertThat(savedProjectDto.getEndYear()).isEqualTo(savedProject.getEndYear());
+        assertThat(savedProjectDto.getTechnologies()).isEqualTo(savedProject.getTechnologies());
+        assertThat(savedProjectDto.getTitle()).isEqualTo(savedProject.getTitle());
+        assertThat(savedProjectDto.getDescription()).isEqualTo(savedProject.getDescription());
     }
 }

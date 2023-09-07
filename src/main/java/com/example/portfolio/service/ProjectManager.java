@@ -31,10 +31,10 @@ public class ProjectManager {
 
     @Transactional
     public Project createProject(ProjectDto projectDto) {
-        return new Project(projectDto.getTitle(), projectDto.getStartYear())
+        return projectRepository.save(new Project(projectDto.getTitle(), projectDto.getStartYear())
                 .setDescription(projectDto.getDescription())
                 .setGithubUrl(projectDto.getGithubUrl())
                 .setEndYear(projectDto.getEndYear())
-                .addTechnologies(projectDto.getTechnologies().toArray(Technology[]::new));
+                .addTechnologies(projectDto.getTechnologies().toArray(Technology[]::new)));
     }
 }

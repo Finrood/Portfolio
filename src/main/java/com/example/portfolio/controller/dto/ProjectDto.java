@@ -4,26 +4,36 @@ import com.example.portfolio.model.Project;
 import com.example.portfolio.model.Technology;
 import com.example.portfolio.utils.LocalizedString;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDto {
+    private String id;
     private LocalizedString title;
     private LocalizedString description;
     private List<Technology> technologies = new ArrayList<>();
     private String githubUrl;
-    private Year startYear;
-    private Year endYear;
+    private String startYear;
+    private String endYear;
 
     public static ProjectDto from(Project project) {
         return new ProjectDto()
+                .setId(project.getId())
                 .setTitle(project.getTitle())
                 .setDescription(project.getDescription())
                 .setTechnologies(project.getTechnologies())
                 .setGithubUrl(project.getGithubUrl())
                 .setStartYear(project.getStartYear())
                 .setEndYear(project.getEndYear());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ProjectDto setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public LocalizedString getTitle() {
@@ -62,20 +72,20 @@ public class ProjectDto {
         return this;
     }
 
-    public Year getStartYear() {
+    public String getStartYear() {
         return startYear;
     }
 
-    public ProjectDto setStartYear(Year startYear) {
+    public ProjectDto setStartYear(String startYear) {
         this.startYear = startYear;
         return this;
     }
 
-    public Year getEndYear() {
+    public String getEndYear() {
         return endYear;
     }
 
-    public ProjectDto setEndYear(Year endYear) {
+    public ProjectDto setEndYear(String endYear) {
         this.endYear = endYear;
         return this;
     }

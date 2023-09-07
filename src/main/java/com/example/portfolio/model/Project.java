@@ -8,7 +8,6 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-import java.time.Year;
 import java.util.*;
 
 @Entity
@@ -24,15 +23,15 @@ public class Project {
     @Convert(converter = TechnologyCollectionJpaConverter.class)
     private final List<Technology> technologies = new ArrayList<>();
     private String githubUrl;
-    private Year startYear;
-    private Year endYear;
+    private String startYear;
+    private String endYear;
 
 
     protected Project() {
         // For JPA only
     }
 
-    public Project(LocalizedString title, Year startYear) {
+    public Project(LocalizedString title, String startYear) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.startYear = startYear;
@@ -78,15 +77,15 @@ public class Project {
         return this;
     }
 
-    public Year getStartYear() {
+    public String getStartYear() {
         return startYear;
     }
 
-    public Year getEndYear() {
+    public String getEndYear() {
         return endYear;
     }
 
-    public Project setEndYear(Year endYear) {
+    public Project setEndYear(String endYear) {
         this.endYear = endYear;
         return this;
     }
