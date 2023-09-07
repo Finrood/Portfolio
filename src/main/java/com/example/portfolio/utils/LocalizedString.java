@@ -51,11 +51,15 @@ public class LocalizedString {
 
     @Override
     public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        translations.forEach((key, value) -> stringBuilder.append(
-                String.format("{\"%s\": \"%s\"}",
-                        key.toLanguageTag(),
-                        value)));
-        return stringBuilder.toString();
+        if (translations.isEmpty()) {
+            return fallbackText;
+        } else {
+            final StringBuilder stringBuilder = new StringBuilder();
+            translations.forEach((key, value) -> stringBuilder.append(
+                    String.format("{\"%s\": \"%s\"}",
+                            key.toLanguageTag(),
+                            value)));
+            return stringBuilder.toString();
+        }
     }
 }
