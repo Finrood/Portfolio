@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WhoAmIComponent } from './who-am-i.component';
+import {WhoAmIComponent} from './who-am-i.component';
 
 describe('WhoAmIComponent', () => {
   let component: WhoAmIComponent;
@@ -10,8 +10,8 @@ describe('WhoAmIComponent', () => {
     await TestBed.configureTestingModule({
       imports: [WhoAmIComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(WhoAmIComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

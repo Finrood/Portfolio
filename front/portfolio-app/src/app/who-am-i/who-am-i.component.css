@@ -1,0 +1,21 @@
+.who-am-i {
+  width: 100vw; /* take up half of the viewport width */
+  height: 75vh; /* take up the full viewport height */
+  background-size: cover; /* ensure the entire image fits within the div */
+  background-repeat: no-repeat; /* prevent the image from repeating */
+  background-position: center; /* center the image within the div */
+  display: flex;
+  align-items: center; /* center the text vertically */
+  justify-content: center; /* center the text horizontally */
+  color: white; /* change this to suit your photo */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* optional: add a shadow to the text for readability */
+}
+
+.content {
+  width: 30vw;
+}
+
+h1 {
+  padding-bottom: 2vh;
+  font-size: 60px;
+}

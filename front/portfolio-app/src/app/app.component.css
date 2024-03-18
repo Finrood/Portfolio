@@ -1,0 +1,44 @@
+.nav-item {
+  margin: 0 35px 0 30px;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0.68);
+  padding-top: 1rem;
+  padding-right: 0;
+  padding-bottom: 1rem;
+  padding-left: 0;
+  max-width: 100vw;
+}
+
+.nav-link {
+  background: transparent;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.nav-link:hover {
+  background: linear-gradient(81.02deg, #fa5560 -23.47%, #b14bf4 45.52%, #4d91ff 114.8%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: 0.2s;
+}
+
+.navbar.sticky {
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: background-color .2s, transform .4s;
+  width: 100%;
+  z-index: 998;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  margin-top: -3.5rem;
+  overflow: hidden;
+}

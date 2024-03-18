@@ -1,8 +1,8 @@
-<!-- who-am-i.component.html -->
-<div class="who-am-i-container" *ngIf="profileData">
-  <h2>Who Am I ?</h2>
-  <h3>{{ profileData.firstname }} {{ profileData.lastname }}</h3>
-  <div class="bio">
-    <p>{{ profileData.biography.translations.en }}</p>
+<div class="who-am-i d-flex text-white" style="background-image: url('../../assets/a.png');">
+  <div class="container">
+    <div class="content">
+      <h1 class="fw-bolder neon-color-full">Back-end developer</h1>
+      <p>{{ profileData.biography.translations.en }}</p>
+    </div>
   </div>
 </div>

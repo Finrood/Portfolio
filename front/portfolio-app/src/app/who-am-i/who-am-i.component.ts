@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {catchError, finalize, Observable, throwError} from "rxjs";
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -11,13 +11,13 @@ import {CommonModule} from "@angular/common";
   styleUrl: './who-am-i.component.css'
 })
 export class WhoAmIComponent {
-  private baseUrl = 'http://localhost:8091/profile';
-
   profileData: any;
   isLoading = false;
   error: string | null = null;
+  private baseUrl = 'http://localhost:8091/profile';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     const email = 'petresamuel@gmail.com';

@@ -1,0 +1,20 @@
+<div class="container" id="projects">
+  <div class="sectionTitle">
+    <h3 class="neon-color-full">My work</h3>
+  </div>
+  <div *ngIf="projectsData" class="row">
+    <div *ngFor="let project of projectsData; let i = index" class="col-lg-4 card-border">
+      <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)" class="card">
+        <a [href]="project.githubUrl" target="_blank">
+          <div class="card-img-container">
+            <img alt="{{ project.name }}" class="card-img-top" src="../../assets/a.png">
+          </div>
+          <h5 class="card-title neon-color-full">
+            {{ project.title.translations.en }}
+          </h5>
+        </a>
+        <p class="card-description">{{ project.description.translations.en }}</p>
+      </div>
+    </div>
+  </div>
+</div>
