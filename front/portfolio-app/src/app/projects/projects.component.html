@@ -1,19 +1,22 @@
-<div class="container" id="projects">
+<div class="container mx-auto" id="projects">
   <div class="sectionTitle">
     <h3 class="neon-color-full">My work</h3>
   </div>
-  <div *ngIf="projectsData" class="row">
-    <div *ngFor="let project of projectsData; let i = index" class="col-lg-4 card-border">
-      <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)" class="card">
+  <div *ngIf="projectsData" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div *ngFor="let project of projectsData; let i = index"
+         class="card relative group bg-[#131313] rounded-lg shadow-md transition-colors duration-250 hover:bg-[#1A202C]">
+      <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)">
         <a [href]="project.githubUrl" target="_blank">
-          <div class="card-img-container">
-            <img alt="{{ project.name }}" class="card-img-top" src="../../assets/a.png">
+          <div class="card-img-container relative rounded-t-lg">
+            <img [ngSrc]="'assets/a.png'" alt="{{ project.name }}" class="card-img-top w-full h-auto" height="200"
+                 width="300">
+            <div class="absolute inset-0 bg-[#000000] opacity-0 group-hover:opacity-50 transition-opacity"></div>
           </div>
-          <h5 class="card-title neon-color-full">
+          <h5 class="card-title neon-color-full text-xl font-bold mt-4">
             {{ project.title.translations.en }}
           </h5>
         </a>
-        <p class="card-description">{{ project.description.translations.en }}</p>
+        <p class="card-description text-[#dddddd] mt-2">{{ project.description.translations.en }}</p>
       </div>
     </div>
   </div>
