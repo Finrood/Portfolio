@@ -1,6 +1,6 @@
-<nav class="bg-black fixed top-0 w-full z-10 opacity-80">
+<nav class="bg-black fixed top-0 w-full z-10 bg-opacity-50 backdrop-filter backdrop-blur-lg">
   <div class="container mx-auto px-0">
-    <div class="flex justify-between items-center py-4">
+    <div class="flex justify-between items-baseline py-4">
       <!-- Logo -->
       <a class="text-xl" href="#">Your Logo</a>
       <!-- Mobile Toggle Button -->
@@ -14,28 +14,25 @@
       <div class="hidden lg:flex lg:items-center lg:w-auto" id="navbarNav">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-gradient-to-br from-red-600 to-blue-600 hover:text-transparent bg-clip-text"
-               href="#who-am-i">Who
-              am I</a>
+            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+               (click)="navigateToSection('who-am-i')">Who am I</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-gradient-to-br from-red-600 to-blue-600 hover:text-transparent bg-clip-text"
-               href="#projects">My
-              projects</a>
+            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+               (click)="navigateToSection('projects')">My projects</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-gradient-to-br from-red-600 to-blue-600 hover:text-transparent bg-clip-text"
-               href="#contact">Contact
-              me</a>
+            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+               (click)="navigateToSection('contact')">Contact me</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-gradient-to-br from-red-600 to-blue-600 hover:text-transparent bg-clip-text" href="https://www.linkedin.com/in/samuel-petre/"
+            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://www.linkedin.com/in/samuel-petre/"
                target="_blank">
               <i class="fab fa-linkedin mr-2"></i> LinkedIn
             </a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-gradient-to-br from-red-600 to-blue-600 hover:text-transparent bg-clip-text" href="https://github.com/Finrood"
+            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://github.com/Finrood"
                target="_blank">
               <i class="fab fa-github mr-2"></i> GitHub
             </a>
@@ -46,7 +43,8 @@
   </div>
 </nav>
 
-<main class="mt-20">
+
+<main>
   <section class="portfolio-section" id="who-am-i">
     <app-who-am-i></app-who-am-i>
   </section>
