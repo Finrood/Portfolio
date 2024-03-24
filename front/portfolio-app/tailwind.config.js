@@ -14,6 +14,9 @@ module.exports = {
       backgroundImage: {
         'neon-color': 'linear-gradient(81.02deg, #fa5560 -23.47%, #b14bf4 45.52%, #4d91ff 114.8%)',
       },
+      textColor: {
+        'linkedin': '#0072b',
+      }
     },
   },
   plugins: [],
