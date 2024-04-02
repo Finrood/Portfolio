@@ -8,8 +8,8 @@ updates:
   - package-ecosystem: "npm"   # Assuming the front-end uses npm for dependency management
     directory: "/front"        # Path to the front-end directory
     schedule:
-      interval: "weekly"        # Frequency of dependency updates (e.g., daily, weekly)
+      interval: "daily"        # Frequency of dependency updates (e.g., daily, weekly)
   - package-ecosystem: "maven" # Assuming the server uses Maven for dependency management
     directory: "/server"       # Path to the server directory
     schedule:
-      interval: "weekly"        # Frequency of dependency updates (e.g., daily, weekly)
+      interval: "daily"        # Frequency of dependency updates (e.g., daily, weekly)
