@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {catchError, finalize, Observable, throwError} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-projects',
@@ -15,7 +16,7 @@ export class ProjectsComponent {
   isLoading = false;
   error: string | null = null;
   cardStates: string[] = [];
-  private baseUrl = 'http://localhost:8091';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }

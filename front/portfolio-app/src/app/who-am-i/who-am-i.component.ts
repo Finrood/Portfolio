@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {catchError, finalize, Observable, throwError} from "rxjs";
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CommonModule, ViewportScroller} from "@angular/common";
+import {CommonModule} from "@angular/common";
 import {animate, style, transition, trigger} from "@angular/animations";
+import { environment } from '../../environments/environment';
 
 
 
@@ -25,12 +26,13 @@ export class WhoAmIComponent {
   profileData: any;
   isLoading = false;
   error: string | null = null;
-  private baseUrl = 'http://localhost:8091/profile';
+  private baseUrl: string = environment.apiUrl + '/profile';
 
   constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
+    this.baseUrl = environment.apiUrl + '/profile';
     const email = 'petresamuel@gmail.com';
     this.fetchProfileData(email);
   }
