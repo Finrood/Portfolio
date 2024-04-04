@@ -1,5 +1,5 @@
 # Use AdoptOpenJDK 21 as the base image
-FROM amazoncorretto:11-alpine
+FROM amazoncorretto:21-alpine
 
 # Install Maven
 RUN apk add --no-cache maven
