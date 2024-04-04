@@ -1,6 +1,9 @@
 # Use AdoptOpenJDK 21 as the base image
 FROM amazoncorretto:11-alpine
 
+# Install Maven
+RUN apk add --no-cache maven
+
 # Set the working directory in the container
 WORKDIR /app
 
