@@ -19,6 +19,9 @@ COPY . .
 # Build the project
 RUN mvn clean install -DskipTests
 
+# Set the desired Spring profile as an environment variable
+ENV SPRING_PROFILES_ACTIVE=local-h2
+
 # Expose the port that the Spring Boot application will run on
 EXPOSE 8091
 
