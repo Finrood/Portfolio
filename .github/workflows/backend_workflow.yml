@@ -28,3 +28,30 @@ jobs:
       working-directory: server
       run: mvn test
 
+    - name: Build and push Docker image
+      working-directory: server
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        docker build -t portfolio-backend .
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u $DOCKER_USERNAME --password-stdin
+        docker tag portfolio-backend $DOCKER_USERNAME/portfolio-backend:latest
+        docker push $DOCKER_USERNAME/portfolio-backend:latest
+
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+            ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+            chmod 600 ssh_key
+            ssh -i ssh_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '
+                docker stop $(docker ps -q --filter ancestor=${{ secrets.DOCKER_USERNAME }}/portfolio-backend:latest) || true &&
+                docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-backend:latest &&
+                docker run -d -p 8091:8091 ${{ secrets.DOCKER_USERNAME }}/portfolio-backend:latest
+            '

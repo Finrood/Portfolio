@@ -34,3 +34,31 @@ jobs:
     - name: Build
       working-directory: front/portfolio-app
       run: npm run build
+
+    - name: Build and push Docker image
+      working-directory: front/portfolio-app
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        docker build -t portfolio-frontend .
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u $DOCKER_USERNAME --password-stdin
+        docker tag portfolio-frontend $DOCKER_USERNAME/portfolio-frontend:latest
+        docker push $DOCKER_USERNAME/portfolio-frontend:latest
+
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+            ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+            chmod 600 ssh_key
+            ssh -i ssh_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '
+                docker stop $(docker ps -q --filter ancestor=${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest) || true &&
+                docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest &&
+                docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest
+            '
