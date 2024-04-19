@@ -2,10 +2,14 @@
 FROM node:latest as build
 WORKDIR /app
 COPY package*.json ./
+RUN npm install
 RUN npm ci
 RUN npm install -g @angular/cli
 COPY . .
-RUN npm run build --configuration=development
+ARG NODE_ENV=production  # Default to production
+ARG BUILD_TIMESTAMP
+RUN echo "NODE_ENV is set to $NODE_ENV"  # Print NODE_ENV
+RUN ng build --configuration=$NODE_ENV
 
 # Stage 2: Serve the application with NGINX
 FROM nginx:latest

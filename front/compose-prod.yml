@@ -5,5 +5,7 @@ services:
     build:
       context: ./portfolio-app
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
     ports:
       - "80:80"
