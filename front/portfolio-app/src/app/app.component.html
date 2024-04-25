@@ -2,9 +2,9 @@
   <div class="container mx-auto px-0">
     <div class="flex justify-between items-baseline py-4">
       <!-- Logo -->
-      <a class="text-xl" href="#">Your Logo</a>
+      <a aria-label="Logo" class="text-xl" href="#">Your Logo</a>
       <!-- Mobile Toggle Button -->
-      <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+      <button id="navBarButton" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
               class="block lg:hidden text-white focus:outline-none">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -14,25 +14,25 @@
       <div class="hidden lg:flex lg:items-center lg:w-auto" id="navbarNav">
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+            <a href="#who-am-i" aria-label="who am i" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
                (click)="navigateToSection('who-am-i')">Who am I</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+            <a href="#projects" aria-label="projects" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
                (click)="navigateToSection('projects')">My projects</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
+            <a href="#contact" aria-label="contact me" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
                (click)="navigateToSection('contact')">Contact me</a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://www.linkedin.com/in/samuel-petre/"
+            <a aria-label="LinkedIn" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://www.linkedin.com/in/samuel-petre/"
                target="_blank">
               <i class="fab fa-linkedin mr-2"></i> LinkedIn
             </a>
           </li>
           <li class="nav-item">
-            <a class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://github.com/Finrood"
+            <a aria-label="Github" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://github.com/Finrood"
                target="_blank">
               <i class="fab fa-github mr-2"></i> GitHub
             </a>

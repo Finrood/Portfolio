@@ -5,13 +5,13 @@
       <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)">
         <a [href]="project.githubUrl" target="_blank">
           <div class="card-img-container relative rounded-t-lg">
-            <img [ngSrc]="'assets/a.png'" alt="{{ project.name }}" class="card-img-top w-full h-auto" height="200"
+            <img [ngSrc]="'assets/img/'+ project.title.translations.en +'.avif'" alt="Project image for {{ project.title.translations.en }}" class="card-img-top w-full h-[28rem]" height="200"
                  width="300">
             <div class="absolute inset-0 bg-[#000000] opacity-0 group-hover:opacity-50 transition-opacity"></div>
           </div>
-          <h5 class="card-title neon-color-full text-xl font-bold mt-4">
+          <h2 class="card-title neon-color-full text-xl font-bold mt-4">
             {{ project.title.translations.en }}
-          </h5>
+          </h2>
         </a>
         <p class="card-description text-[#dddddd] mt-2">{{ project.description.translations.en }}</p>
       </div>
