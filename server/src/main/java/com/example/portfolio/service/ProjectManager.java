@@ -5,6 +5,7 @@ import com.example.portfolio.controller.support.ResourceNotFoundException;
 import com.example.portfolio.model.Project;
 import com.example.portfolio.model.Technology;
 import com.example.portfolio.repository.ProjectRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +20,14 @@ public class ProjectManager {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "projects", key = "#projectId")
     public Project getProject(String projectId) {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Project with id [%s] not found", projectId)));
     }
 
     @Transactional(readOnly = true)
+    @Cacheable("allProjects")
     public List<Project> getAllProject() {
         return projectRepository.findAll();
     }
