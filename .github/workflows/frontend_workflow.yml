@@ -60,5 +60,5 @@ jobs:
             ssh -i ssh_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '
                 docker stop $(docker ps -q --filter ancestor=${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest) || true &&
                 docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest &&
-                docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest
+                docker run -d -p 80:80 -p 443:443 ${{ secrets.DOCKER_USERNAME }}/portfolio-frontend:latest
             '

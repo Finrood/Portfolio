@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  web:
+  webserver:
     build:
       context: ./portfolio-app
       dockerfile: Dockerfile
@@ -9,3 +9,5 @@ services:
         - NODE_ENV=production
     ports:
       - "80:80"
+      - "443:443"
+    restart: always
