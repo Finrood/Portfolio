@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Automatically renew certificates using Certbot
-
-# Execute Certbot renewal
-certbot renew --quiet
-
-# Reload NGINX to apply changes
-nginx -s reload

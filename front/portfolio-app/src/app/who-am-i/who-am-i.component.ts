@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {catchError, finalize, Observable, throwError} from "rxjs";
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CommonModule} from "@angular/common";
+import {HttpClient} from '@angular/common/http';
 import {animate, style, transition, trigger} from "@angular/animations";
 import { environment } from '../../environments/environment';
 
@@ -10,7 +9,7 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-who-am-i',
   standalone: true,
-  imports: [HttpClientModule, CommonModule],
+  imports: [],
   templateUrl: './who-am-i.component.html',
   styleUrl: './who-am-i.component.css',
   animations: [

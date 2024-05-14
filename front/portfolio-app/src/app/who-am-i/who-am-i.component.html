@@ -1,15 +1,15 @@
 <div class="who-am-i bg-cover bg-no-repeat bg-center h-svh flex items-center justify-center"
      style="background-image: url('../../assets/img/background2.avif');">
-  <div class="container">
-    <div class="content w-2/6">
-      <h1 class="font-bold text-3xl neon-color-full">Back-end developer</h1>
+  <div class="container max-w-[85rem] mx-auto">
+    <div class="max-w-[35rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <h1 class="font-bold text-3xl neon-color-full py-1">Back-end developer</h1>
+      <hr class="border-white py-3">
       <p>{{ profileData?.biography.translations.en }}</p>
       <button id="toProjects" aria-label="To projects" (click)="scrollToProjects()" class="absolute bottom-48 inline-flex items-center justify-center w-20 h-20 rounded-full text-white hover:bg-neon-color border-2 border-white">
         <svg class="w-10 h-10 transform rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
         </svg>
       </button>
-
     </div>
   </div>
 </div>

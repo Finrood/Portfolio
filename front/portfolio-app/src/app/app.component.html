@@ -1,57 +1,35 @@
-<nav class="bg-black fixed top-0 w-full z-10 bg-opacity-50 backdrop-filter backdrop-blur-lg">
-  <div class="container mx-auto px-0">
-    <div class="flex justify-between items-baseline py-4">
-      <!-- Logo -->
-      <a aria-label="Logo" class="text-xl" href="#">Your Logo</a>
-      <!-- Mobile Toggle Button -->
-      <button id="navBarButton" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-              class="block lg:hidden text-white focus:outline-none">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-        </svg>
-      </button>
-      <!-- Navbar links -->
-      <div class="hidden lg:flex lg:items-center lg:w-auto" id="navbarNav">
-        <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
-          <li class="nav-item">
-            <a href="#who-am-i" aria-label="who am i" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
-               (click)="navigateToSection('who-am-i')">Who am I</a>
-          </li>
-          <li class="nav-item">
-            <a href="#projects" aria-label="projects" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
-               (click)="navigateToSection('projects')">My projects</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" aria-label="contact me" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer"
-               (click)="navigateToSection('contact')">Contact me</a>
-          </li>
-          <li class="nav-item">
-            <a aria-label="LinkedIn" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://www.linkedin.com/in/samuel-petre/"
-               target="_blank">
-              <i class="fab fa-linkedin mr-2"></i> LinkedIn
-            </a>
-          </li>
-          <li class="nav-item">
-            <a aria-label="Github" class="text-white px-7 py-3 flex items-center text-sm font-bold hover:bg-neon-color hover:text-transparent bg-clip-text" href="https://github.com/Finrood"
-               target="_blank">
-              <i class="fab fa-github mr-2"></i> GitHub
-            </a>
-          </li>
-        </ul>
+<header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg fixed text-sm py-3 sm:py-0">
+  <nav class="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8" aria-label="Global">
+    <div class="flex items-center justify-between">
+      <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Brand">Brand</a>
+      <div class="sm:hidden">
+        <button type="button" class="hs-collapse-toggle size-9 flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-white/20 text-white hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none" data-hs-collapse="#navbar-collapse-with-animation" aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation">
+          <svg class="hs-collapse-open:hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+          <svg class="hs-collapse-open:block hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
       </div>
     </div>
-  </div>
-</nav>
+    <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+      <div class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
+        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('who-am-i')" aria-label="who am i">Who am I</a>
+        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('projects')" aria-label="projects">My projects</a>
+        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('contact')" aria-label="contact me">Contact me</a>
 
+        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" href="https://www.linkedin.com/in/samuel-petre/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a>
+        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" href="https://github.com/Finrood" target="_blank" aria-label="Github"><i class="fab fa-github mr-2"></i> GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
 <main>
-  <section class="portfolio-section" id="who-am-i">
+  <section class="pb-14" id="who-am-i">
     <app-who-am-i></app-who-am-i>
   </section>
-  <section class="portfolio-section" id="projects">
+  <section class="pb-14" id="projects">
     <app-projects></app-projects>
   </section>
-  <section class="portfolio-section" id="contact">
+  <section class="pb-14" id="contact">
     <app-contact></app-contact>
   </section>
 </main>

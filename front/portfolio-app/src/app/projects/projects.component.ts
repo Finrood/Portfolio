@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {catchError, finalize, Observable, throwError} from "rxjs";
 import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, NgOptimizedImage],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
 })

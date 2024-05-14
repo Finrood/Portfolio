@@ -5,6 +5,10 @@ module.exports = {
     './src/**/*.js',
     './src/**/*.css',
     './src/**/*.scss',
+    './node_modules/preline/dist/*.js',
+  ],
+  plugins: [
+    require('preline/plugin'),
   ],
   theme: {
     extend: {
@@ -19,6 +23,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
 }
 

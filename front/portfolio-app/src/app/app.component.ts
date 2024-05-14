@@ -1,9 +1,16 @@
 import {Component, ElementRef} from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
+import {NavigationEnd, Router, RouterOutlet, Event} from '@angular/router';
 import {WhoAmIComponent} from "./who-am-i/who-am-i.component";
 import {ProjectsComponent} from "./projects/projects.component";
 import {ContactComponent} from "./contact/contact.component";
 
+import { IStaticMethods } from 'preline/preline';
+
+declare global {
+  interface Window {
+    HSStaticMethods: IStaticMethods;
+  }
+}
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,7 +21,21 @@ import {ContactComponent} from "./contact/contact.component";
 export class AppComponent {
   title = 'Samuel Petre Portfolio';
 
-  constructor(private router: Router, private elementRef: ElementRef) { }
+  constructor(private router: Router, private elementRef: ElementRef) {
+
+  }
+
+  ngOnInit() {
+    if (typeof window !== 'undefined') {
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationEnd) {
+          setTimeout(() => {
+            window.HSStaticMethods.autoInit();
+          }, 100);
+        }
+      });
+    }
+  }
 
   scrollToSection(sectionId: string): void {
     const section = this.elementRef.nativeElement.querySelector('#' + sectionId);
