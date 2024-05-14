@@ -13,20 +13,14 @@ RUN ng build --configuration=$NODE_ENV
 
 # Stage 2: Serve the application with NGINX
 FROM nginx:latest
-
-# Remove default NGINX configuration
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copy NGINX configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose ports
-EXPOSE 80
-EXPOSE 443
-
-# Copy built application files
+RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist/portfolio-app/browser /usr/share/nginx/html
 COPY --from=build /app/dist/portfolio-app/server /usr/share/nginx/html
 
-# Start NGINX and run Certbot for HTTPS
-CMD service nginx start
+EXPOSE 80
+EXPOSE 443
+
+# Start Nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]

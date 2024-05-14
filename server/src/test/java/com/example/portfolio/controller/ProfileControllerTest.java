@@ -4,6 +4,7 @@ import com.example.portfolio.PortfolioApplication;
 import com.example.portfolio.model.Profile;
 import com.example.portfolio.repository.ProfileRepository;
 import jakarta.annotation.PostConstruct;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,8 @@ class ProfileControllerTest {
                 .andExpect(jsonPath("$.email").value("john.doe@test.com"))
                 .andExpect(jsonPath("$.firstname").value("John"))
                 .andExpect(jsonPath("$.lastname").value("Doe"))
-                .andExpect(jsonPath("$.birthdate").value("2000-06-01"));
+                .andExpect(jsonPath("$.birthdate", Matchers.contains(2000, 6, 1)));
+
     }
 
     @Test
