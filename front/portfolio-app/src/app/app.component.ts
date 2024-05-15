@@ -5,6 +5,7 @@ import {ProjectsComponent} from "./projects/projects.component";
 import {ContactComponent} from "./contact/contact.component";
 
 import { IStaticMethods } from 'preline/preline';
+import {NgOptimizedImage} from "@angular/common";
 
 declare global {
   interface Window {
@@ -14,7 +15,7 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WhoAmIComponent, ProjectsComponent, ContactComponent],
+  imports: [RouterOutlet, WhoAmIComponent, ProjectsComponent, ContactComponent, NgOptimizedImage],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
