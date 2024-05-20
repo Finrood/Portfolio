@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet, Event} from '@angular/router';
 import {WhoAmIComponent} from "./who-am-i/who-am-i.component";
 import {ProjectsComponent} from "./projects/projects.component";
@@ -19,19 +19,17 @@ declare global {
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Samuel Petre Portfolio';
 
-  constructor(private router: Router, private elementRef: ElementRef) {
+  constructor(private router: Router, private elementRef: ElementRef) {}
 
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.router.events.subscribe((event: Event) => {
         if (event instanceof NavigationEnd) {
           setTimeout(() => {
-            window.HSStaticMethods.autoInit();
+            window.HSStaticMethods?.autoInit?.();
           }, 100);
         }
       });
@@ -39,17 +37,12 @@ export class AppComponent {
   }
 
   scrollToSection(sectionId: string): void {
-    const section = this.elementRef.nativeElement.querySelector('#' + sectionId);
+    const section = document.getElementById(sectionId);
     if (section) {
       // @ts-ignore
       const navbarHeight = document.querySelector('nav').clientHeight;
       const offset = section.getBoundingClientRect().top + window.scrollY - navbarHeight;
       window.scrollTo({ top: offset, behavior: 'smooth' });
     }
-  }
-
-  navigateToSection(sectionId: string): void {
-    this.router.navigate([], { fragment: sectionId });
-    this.scrollToSection(sectionId);
   }
 }
