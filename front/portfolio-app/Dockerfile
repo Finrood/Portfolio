@@ -1,26 +1,32 @@
 # Stage 1: Build the application
-FROM node:latest as build
+FROM node:20 as build
+
 WORKDIR /app
+
+# Install dependencies
 COPY package*.json ./
-RUN npm install
-RUN npm ci
-RUN npm install -g @angular/cli
+RUN npm install --silent
+
+# Copy application code
 COPY . .
-ARG NODE_ENV=production  # Default to production
+
+# Build the application
+ARG NODE_ENV=production
 ARG BUILD_TIMESTAMP
 RUN echo "NODE_ENV is set to $NODE_ENV"  # Print NODE_ENV
-RUN ng build --configuration=$NODE_ENV
+RUN npm run build -- --configuration=$NODE_ENV
 
 # Stage 2: Serve the application with NGINX
-FROM nginx:latest
+FROM nginx:alpine
+
+# Copy NGINX configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-RUN rm -rf /usr/share/nginx/html/*
+
+# Copy built files from the previous stage
 COPY --from=build /app/dist/portfolio-app/browser /usr/share/nginx/html
-COPY --from=build /app/dist/portfolio-app/server /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 443
 
-# Start Nginx when the container starts
+# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
