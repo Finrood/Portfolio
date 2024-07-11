@@ -1,29 +1,10 @@
-# Use AdoptOpenJDK 21 as the base image
-FROM amazoncorretto:21-alpine
-
-# Install Maven
-RUN apk add --no-cache maven
-
-# Set the working directory in the container
+# Dockerfile for portfolio-backend
+FROM maven:3.9.8-amazoncorretto-21 AS build
 WORKDIR /app
-
-# Copy the Maven project file to the container
-COPY pom.xml .
-
-# Download dependencies if pom.xml changed
-RUN mvn dependency:go-offline -B
-
-# Copy the whole project
 COPY . .
+RUN mvn clean package -DskipTests
 
-# Build the project
-RUN mvn clean install -DskipTests
-
-# Set the desired Spring profile as an environment variable
-ENV SPRING_PROFILES_ACTIVE=local-h2
-
-# Expose the port that the Spring Boot application will run on
-EXPOSE 8091
-
-# Command to run the Spring Boot application when the container starts
-CMD ["java", "-jar", "target/Portfolio-1.0.0.jar"]
+FROM amazoncorretto:21-alpine
+VOLUME /tmp
+COPY --from=build /app/target/*.jar Portfolio-1.0.0.jar
+ENTRYPOINT ["java","-jar","/Portfolio-1.0.0.jar"]
