@@ -3,7 +3,7 @@ FROM maven:3.9.8-amazoncorretto-21 AS build
 WORKDIR /app
 
 # Copy the parent POM first
-COPY portfolio-parent.pom .
+COPY pom.xml .
 COPY . .
 RUN mvn clean package -DskipTests
 
