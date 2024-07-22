@@ -1,22 +1,10 @@
-# Build stage
+# Dockerfile for portfolio-backend
 FROM maven:3.9.8-amazoncorretto-21 AS build
 WORKDIR /app
-
-# Copy the parent POM first
-COPY ../pom.xml ../
-
-# Copy the backend and frontend module's POMs
-COPY pom.xml .
-
-# Copy the rest of the project
 COPY . .
-
-# Build the project
 RUN mvn clean package -DskipTests
 
-# Production stage
 FROM amazoncorretto:21-alpine
-WORKDIR /app
-
-COPY --from=build /app/server/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+VOLUME /tmp
+COPY --from=build /app/target/*.jar Portfolio-1.0.0.jar
+ENTRYPOINT ["java","-jar","/Portfolio-1.0.0.jar"]
