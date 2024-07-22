@@ -15,8 +15,8 @@ public class ProfileController {
         this.profileManager = profileManager;
     }
 
-    @GetMapping(value = "/profile/{email}")
-    public ProfileDto getProfile(@PathVariable String email) {
+    @GetMapping("/profile/{email}")
+    public ProfileDto getProfile(@PathVariable("email") String email) {
         return toDto(profileManager.getProfile(email));
     }
 
