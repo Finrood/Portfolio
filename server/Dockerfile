@@ -3,10 +3,10 @@ FROM maven:3.9.8-amazoncorretto-21 AS build
 WORKDIR /app
 
 # Copy the parent POM first
-COPY pom.xml .
+COPY ../pom.xml ../
 
 # Copy the backend and frontend module's POMs
-COPY server/pom.xml server/
+COPY pom.xml .
 
 # Copy the rest of the project
 COPY . .
