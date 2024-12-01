@@ -5,22 +5,21 @@ import { ProfileService } from '../service/profile.service';
 import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-who-am-i',
-  standalone: true,
-  templateUrl: './who-am-i.component.html',
-  styleUrls: ['./who-am-i.component.css'],
-  animations: [
-    trigger('scrollAnimation', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('300ms', style({opacity: 1})),
-      ]),
-    ]),
-  ],
-  imports: [
-    NgIf,
-    NgForOf
-  ]
+    selector: 'app-who-am-i',
+    templateUrl: './who-am-i.component.html',
+    styleUrls: ['./who-am-i.component.css'],
+    animations: [
+        trigger('scrollAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms', style({ opacity: 1 })),
+            ]),
+        ]),
+    ],
+    imports: [
+        NgIf,
+        NgForOf
+    ]
 })
 export class WhoAmIComponent implements OnInit {
   profileData: any;

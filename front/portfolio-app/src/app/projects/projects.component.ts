@@ -11,14 +11,13 @@ interface Project {
 }
 
 @Component({
-  selector: 'app-projects',
-  standalone: true,
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css'],
-  imports: [
-    NgIf,
-    NgForOf
-  ]
+    selector: 'app-projects',
+    templateUrl: './projects.component.html',
+    styleUrls: ['./projects.component.css'],
+    imports: [
+        NgIf,
+        NgForOf
+    ]
 })
 export class ProjectsComponent implements OnInit {
   projectsData: Project[] = [];
