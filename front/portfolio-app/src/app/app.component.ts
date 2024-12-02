@@ -14,7 +14,7 @@ declare global {
 }
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, WhoAmIComponent, ProjectsComponent, ContactComponent, NgOptimizedImage],
+    imports: [WhoAmIComponent, ProjectsComponent, ContactComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
