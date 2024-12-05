@@ -25,7 +25,7 @@
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.20",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "glob": "^11.0.0",
     "postcss": "^8.4.49",
     "preline": "^2.5.1",
