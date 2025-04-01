@@ -14,7 +14,7 @@
     <description>Portfolio Server</description>
 
     <properties>
-        <spring-boot.version>3.4.2</spring-boot.version>
+        <spring-boot.version>3.4.4</spring-boot.version>
     </properties>
 
     <dependencyManagement>
