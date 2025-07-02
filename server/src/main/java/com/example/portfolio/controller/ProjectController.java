@@ -3,12 +3,15 @@ package com.example.portfolio.controller;
 import com.example.portfolio.controller.dto.ProjectDto;
 import com.example.portfolio.model.Project;
 import com.example.portfolio.service.ProjectManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class ProjectController {
+    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
     private final ProjectManager projectManager;
 
     public ProjectController(ProjectManager projectManager) {
