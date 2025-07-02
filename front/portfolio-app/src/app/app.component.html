@@ -1,35 +1,65 @@
-<header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg fixed text-sm py-3 sm:py-0">
-  <nav class="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8" aria-label="Global">
-    <div class="flex items-center justify-between">
-      <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Brand"><img [src]="'assets/img/logo.avif'" alt="Brand Logo" height="80" width="80"></a>
-      <div class="sm:hidden">
-        <button type="button" class="hs-collapse-toggle size-9 flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-white/20 text-white hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none" data-hs-collapse="#navbar-collapse-with-animation" aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation">
-          <svg class="hs-collapse-open:hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
-          <svg class="hs-collapse-open:block hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+<div class="flex justify-center items-center h-screen bg-gray-950" *ngIf="loading">
+  <div class="relative flex items-center justify-center w-32 h-32">
+    <div class="absolute animate-spin rounded-full h-full w-full border-t-4 border-b-4 border-purple-500"></div>
+    <div class="absolute animate-ping rounded-full h-2/3 w-2/3 border-t-4 border-b-4 border-pink-500"></div>
+    <svg class="h-1/2 w-1/2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+  </div>
+</div>
+
+<div class="min-h-screen text-white bg-gradient-to-br from-gray-950 to-black animate-gradient-shift">
+  <header class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-950 to-indigo-950 bg-opacity-90 backdrop-blur-lg shadow-2xl border-b border-purple-700">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-yellow-400 animate-pulse-slow">
+        My Portfolio
+      </a>
+      <div class="hidden md:flex space-x-10">
+        <a (click)="scrollToSection('who-am-i')" class="relative text-xl font-medium text-white hover:text-pink-300 transition-all duration-300 group cursor-pointer transform hover:scale-105">
+          About
+          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-pink-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+        </a>
+        <a (click)="scrollToSection('projects')" class="relative text-xl font-medium text-white hover:text-yellow-300 transition-all duration-300 group cursor-pointer transform hover:scale-105">
+          Projects
+          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+        </a>
+        <a (click)="scrollToSection('contact')" class="relative text-xl font-medium text-white hover:text-green-300 transition-all duration-300 group cursor-pointer transform hover:scale-105">
+          Contact
+          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-green-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+        </a>
+      </div>
+      <div class="md:hidden">
+        <button (click)="mobileMenuOpen = !mobileMenuOpen" class="text-white focus:outline-none">
+          <svg class="h-9 w-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
         </button>
       </div>
+    </nav>
+    <div *ngIf="mobileMenuOpen" class="md:hidden bg-gradient-to-r from-purple-950 to-indigo-950 bg-opacity-95 shadow-inner">
+      <a (click)="scrollToSection('who-am-i'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-purple-800 transition-colors duration-300">About</a>
+      <a (click)="scrollToSection('projects'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-indigo-800 transition-colors duration-300">Projects</a>
+      <a (click)="scrollToSection('contact'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-green-800 transition-colors duration-300">Contact</a>
     </div>
-    <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
-      <div class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
-        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('who-am-i')" aria-label="who am i">Who am I</a>
-        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('projects')" aria-label="projects">My projects</a>
-        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" (click)="scrollToSection('contact')" aria-label="contact me">Contact me</a>
+  </header>
 
-        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" href="https://www.linkedin.com/in/samuel-petre/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin mr-2"></i> LinkedIn</a>
-        <a class="font-medium text-white/80 hover:bg-neon-color hover:text-transparent bg-clip-text cursor-pointer sm:py-6" href="https://github.com/Finrood" target="_blank" aria-label="Github"><i class="fab fa-github mr-2"></i> GitHub</a>
-      </div>
+  <main class="container mx-auto px-6 pt-40">
+    <section id="who-am-i" class="min-h-screen py-20">
+      <app-who-am-i (componentLoaded)="onWhoAmILoaded($event)"></app-who-am-i>
+    </section>
+    <section id="projects" class="min-h-screen py-20">
+      <app-projects (componentLoaded)="onProjectsLoaded($event)"></app-projects>
+    </section>
+    <section id="contact" class="min-h-screen py-20">
+      <app-contact (componentLoaded)="onContactLoaded($event)"></app-contact>
+    </section>
+  </main>
+
+  <footer class="bg-gray-950 py-10 shadow-inner border-t border-gray-800">
+    <div class="container mx-auto px-6 text-center text-gray-600">
+      <p class="text-lg">&copy; 2025 My Portfolio. All rights reserved.</p>
+      <p class="text-sm mt-2">Designed with <span class="text-red-500">&hearts;</span> by Gemini CLI</p>
     </div>
-  </nav>
-</header>
-
-<main>
-  <section class="pb-14" id="who-am-i">
-    <app-who-am-i></app-who-am-i>
-  </section>
-  <section class="pb-14" id="projects">
-    <app-projects></app-projects>
-  </section>
-  <section class="pb-14" id="contact">
-    <app-contact></app-contact>
-  </section>
-</main>
+  </footer>
+</div>

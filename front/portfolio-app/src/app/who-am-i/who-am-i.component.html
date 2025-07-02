@@ -1,37 +1,52 @@
-<div class="who-am-i bg-cover bg-no-repeat bg-center h-svh flex items-center justify-center" [style.background-image]="'url(../../assets/img/background2.avif)'">
-  <div class="container max-w-[85rem] mx-auto relative">
-    <div class="max-w-[35rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 text-container"> <!-- Added a class name for the text container -->
-      @if (isLoading || error) {
-        <div class="animate-pulse">
-          <div class="h-8 bg-gray-200 rounded-full dark:bg-neutral-700 mb-4 w-3/5 sm:w-full"></div>
-          <hr class="border-white py-3">
-          <p class="h-4 bg-gray-200 rounded-full dark:bg-neutral-700 mb-4 w-2/5 sm:w-full"></p>
-          <ul class="space-y-3">
-            @for (item of skeletonItems; track item) {
-              <li class="w-full h-4 bg-gray-200 rounded-full dark:bg-neutral-700"></li>
-            }
-          </ul>
-          <button class="relative bottom-0 left-0 ml-4 mb-4 sm:mb-0 sm:right-auto sm:left-auto inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-200 dark:bg-neutral-700 z-10" aria-label="Loading Button">
-            <svg class="w-10 h-10 transform rotate-180 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-            </svg>
-          </button>
-        </div>
-        @if (error) {
-          <div class="text-red-500 mt-4">{{ error }}</div>
-        }
-      }
+<div class="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+  <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('assets/img/background2.avif');"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-950 to-black opacity-80"></div>
 
-      @if (!isLoading && !error) {
-        <h1 class="font-bold text-3xl neon-color-full py-1">Back-end developer</h1>
-        <hr class="border-white py-3">
-        <p class="sm:max-w-md">{{ profileData?.biography.translations.en }}</p>
-        <button id="toProjects" aria-label="To projects" (click)="scrollToProjects()" class="relative top-10 left-0 ml-4 mb-4 sm:mb-0 sm:right-auto sm:left-auto inline-flex items-center justify-center w-20 h-20 rounded-full text-white hover:bg-neon-color border-2 border-white z-0">
-          <svg class="w-10 h-10 transform rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-          </svg>
-        </button>
-      }
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="text-center mb-20">
+      <h2 class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 mb-6 animate-fade-in-up animation-delay-100">
+        About Me
+      </h2>
+      <p class="text-2xl text-gray-300 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+        A passionate backend developer dedicated to crafting robust, scalable, and efficient software solutions.
+      </p>
+    </div>
+
+    <div *ngIf="isLoading || error" class="flex justify-center items-center">
+      <div *ngIf="isLoading" class="animate-pulse flex space-x-4">
+        <div class="rounded-full bg-gray-700 h-12 w-12"></div>
+        <div class="flex-1 space-y-4 py-1">
+          <div class="h-4 bg-gray-700 rounded w-3/4"></div>
+          <div class="space-y-2">
+            <div class="h-4 bg-gray-700 rounded"></div>
+            <div class="h-4 bg-gray-700 rounded w-5/6"></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="error" class="text-red-500">
+        <p>Error loading profile data. Please try again later.</p>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="grid md:grid-cols-2 gap-20 items-center bg-gray-800 bg-opacity-70 p-12 rounded-3xl shadow-2xl border border-gray-700 animate-fade-in-up animation-delay-300">
+      <div class="text-xl text-gray-200 leading-relaxed">
+        <h3 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 mb-8">
+          Backend Developer
+        </h3>
+        <p class="mb-10">{{ profileData?.biography.translations.en }}</p>
+        <a href="#contact" class="inline-block px-10 py-5 rounded-full font-extrabold text-white bg-gradient-to-r from-purple-600 to-indigo-700 shadow-lg transform transition-all duration-500 hover:scale-105 hover:from-purple-700 hover:to-indigo-800 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-70 group relative overflow-hidden">
+          <span class="absolute inset-0 bg-gradient-to-r from-purple-700 to-indigo-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+          <span class="relative z-10">Contact Me</span>
+        </a>
+      </div>
+      <div class="relative flex justify-center items-center">
+        <div class="w-full max-w-md h-96 bg-gray-900 rounded-2xl shadow-xl overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-700 border-4 border-transparent hover:border-purple-500 relative group">
+          <img src="assets/img/logo.avif" alt="Profile Image" class="w-full h-full object-cover object-center filter grayscale group-hover:grayscale-0 transition-all duration-700">
+          <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
+        </div>
+        <div class="absolute inset-0 border-4 border-purple-500 rounded-2xl animate-pulse-border animation-delay-500"></div>
+      </div>
     </div>
   </div>
 </div>

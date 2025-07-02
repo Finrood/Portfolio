@@ -1,47 +1,60 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
-import {NavigationEnd, Router, RouterOutlet, Event} from '@angular/router';
-import {WhoAmIComponent} from "./who-am-i/who-am-i.component";
-import {ProjectsComponent} from "./projects/projects.component";
-import {ContactComponent} from "./contact/contact.component";
+import { Component, OnInit } from '@angular/core';
+import { WhoAmIComponent } from "./who-am-i/who-am-i.component";
+import { ProjectsComponent } from "./projects/projects.component";
+import { ContactComponent } from "./contact/contact.component";
+import { NgIf } from "@angular/common";
 
-import { IStaticMethods } from 'preline/preline';
-import {NgOptimizedImage} from "@angular/common";
-
-declare global {
-  interface Window {
-    HSStaticMethods: IStaticMethods;
-  }
-}
 @Component({
-    selector: 'app-root',
-    imports: [WhoAmIComponent, ProjectsComponent, ContactComponent],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  imports: [
+    WhoAmIComponent,
+    ProjectsComponent,
+    ContactComponent,
+    NgIf
+  ],
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Samuel Petre Portfolio';
+  loading = true;
+  mobileMenuOpen = false;
 
-  constructor(private router: Router, private elementRef: ElementRef) {}
+  whoAmILoaded = false;
+  projectsLoaded = false;
+  contactLoaded = false;
 
-  ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      this.router.events.subscribe((event: Event) => {
-        if (event instanceof NavigationEnd) {
-          setTimeout(() => {
-            window.HSStaticMethods?.autoInit?.();
-          }, 100);
-        }
-      });
-    }
+  ngOnInit() {
+    // Initial check, though components will update these flags
+    this.checkAllComponentsLoaded();
+  }
+
+  onWhoAmILoaded(loaded: boolean) {
+    this.whoAmILoaded = loaded;
+    console.log(`WhoAmILoaded: ${loaded}`);
+    this.checkAllComponentsLoaded();
+  }
+
+  onProjectsLoaded(loaded: boolean) {
+    this.projectsLoaded = loaded;
+    console.log(`ProjectsLoaded: ${loaded}`);
+    this.checkAllComponentsLoaded();
+  }
+
+  onContactLoaded(loaded: boolean) {
+    this.contactLoaded = loaded;
+    console.log(`ContactLoaded: ${loaded}`);
+    this.checkAllComponentsLoaded();
+  }
+
+  private checkAllComponentsLoaded() {
+    this.loading = !(this.whoAmILoaded && this.projectsLoaded && this.contactLoaded);
+    console.log(`All components loaded: ${!this.loading}`);
   }
 
   scrollToSection(sectionId: string): void {
     const section = document.getElementById(sectionId);
     if (section) {
-      // @ts-ignore
-      const navbarHeight = document.querySelector('nav').clientHeight;
-      const offset = section.getBoundingClientRect().top + window.scrollY - navbarHeight;
-      window.scrollTo({ top: offset, behavior: 'smooth' });
+      section.scrollIntoView({ behavior: 'smooth' });
     }
   }
 }

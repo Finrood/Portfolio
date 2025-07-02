@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-
 
 interface Project {
   title: { translations: { en: string } };
@@ -10,17 +9,19 @@ interface Project {
   githubUrl: string;
 }
 
+import { CommonModule } from '@angular/common';
+
 @Component({
-    selector: 'app-projects',
-    templateUrl: './projects.component.html',
-    styleUrls: ['./projects.component.css'],
-    imports: []
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.css'],
+  imports: [CommonModule]
 })
 export class ProjectsComponent implements OnInit {
   projectsData: Project[] = [];
-  isLoading = false;
+  isLoading = true;
   error: string | null = null;
-  cardStates: string[] = [];
+  @Output() componentLoaded = new EventEmitter<boolean>();
 
   private readonly baseUrl: string = `${environment.apiUrl}/projects`;
 
@@ -30,24 +31,20 @@ export class ProjectsComponent implements OnInit {
     this.fetchProjectsData();
   }
 
-  toggleImageHoverEffect(index: number): void {
-    this.cardStates[index] = this.cardStates[index] === 'normal' ? 'hovered' : 'normal';
-  }
-
   fetchProjectsData(): void {
-    this.isLoading = true;
     this.http.get<Project[]>(this.baseUrl).pipe(
       catchError(error => {
         this.error = 'Error while fetching projects data: ' + (error.message || 'Server error');
         return throwError(() => new Error(this.error || 'Unknown error'));
       }),
       finalize(() => {
-        this.isLoading = false;
-      })
+          this.isLoading = false;
+          this.componentLoaded.emit(true);
+          console.log('ProjectsComponent: Data fetching complete, componentLoaded emitted.');
+        })
     ).subscribe({
       next: data => {
         this.projectsData = data;
-        this.cardStates = this.projectsData.map(() => 'normal');
       },
       error: err => console.error(err)
     });

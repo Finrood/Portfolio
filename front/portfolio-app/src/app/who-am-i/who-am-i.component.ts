@@ -1,28 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { catchError, finalize, throwError } from 'rxjs';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { ProfileService } from '../service/profile.service';
 
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-who-am-i',
-    templateUrl: './who-am-i.component.html',
-    styleUrls: ['./who-am-i.component.css'],
-    animations: [
-        trigger('scrollAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate('300ms', style({ opacity: 1 })),
-            ]),
-        ]),
-    ],
-    imports: []
+  selector: 'app-who-am-i',
+  templateUrl: './who-am-i.component.html',
+  styleUrls: ['./who-am-i.component.css'],
+  imports: [CommonModule]
 })
 export class WhoAmIComponent implements OnInit {
   profileData: any;
-  isLoading = false;
+  isLoading = true;
   error: string = '';
-  skeletonItems = Array(4);
+  @Output() componentLoaded = new EventEmitter<boolean>();
 
   constructor(private profileService: ProfileService) {}
 
@@ -31,17 +23,7 @@ export class WhoAmIComponent implements OnInit {
     this.fetchProfileData(email);
   }
 
-  scrollToProjects(): void {
-    const section = document.getElementById('projects');
-    if (section) {
-      const navbarHeight = document.querySelector('nav')?.clientHeight ?? 0;
-      const offset = section.getBoundingClientRect().top + window.scrollY - navbarHeight;
-      window.scrollTo({ top: offset, behavior: 'smooth' });
-    }
-  }
-
   private fetchProfileData(email: string): void {
-    this.isLoading = true;
     this.profileService.getProfileByEmail(email)
       .pipe(
         catchError(error => {
@@ -51,6 +33,8 @@ export class WhoAmIComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading = false;
+          this.componentLoaded.emit(true);
+          console.log('WhoAmIComponent: Data fetching complete, componentLoaded emitted.');
         })
       )
       .subscribe({
