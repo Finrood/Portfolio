@@ -1,7 +1,7 @@
 FROM node:22 AS build
 WORKDIR /app/portfolio-app
-COPY portfolio-app/package*.json ./
-RUN npm install
+COPY portfolio-app/package.json portfolio-app/package-lock.json ./
+RUN npm install --silent
 COPY portfolio-app .
 # Build the application
 ARG NODE_ENV=production
