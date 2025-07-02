@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import {NgForOf, NgIf} from "@angular/common";
+
 
 interface Project {
   title: { translations: { en: string } };
@@ -14,10 +14,7 @@ interface Project {
     selector: 'app-projects',
     templateUrl: './projects.component.html',
     styleUrls: ['./projects.component.css'],
-    imports: [
-        NgIf,
-        NgForOf
-    ]
+    imports: []
 })
 export class ProjectsComponent implements OnInit {
   projectsData: Project[] = [];

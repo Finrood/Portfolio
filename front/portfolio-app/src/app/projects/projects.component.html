@@ -3,7 +3,7 @@
   <hr class="border-white py-3">
 
   <!-- Skeleton Loader and Error Message -->
-  <ng-container *ngIf="isLoading || error">
+  @if (isLoading || error) {
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
       <div class="card relative bg-[#131313] flex flex-col h-full border border-neutral-700 shadow-sm shadow-neutral-700/70 rounded-xl">
         <div class="flex flex-col card-img-container relative shadow-sm rounded-t-xl">
@@ -15,24 +15,28 @@
         <p class="text-[#dddddd] mt-2 bg-gray-200 dark:bg-neutral-700 rounded-full w-3/4"></p>
       </div>
     </div>
-    <div *ngIf="error" class="text-red-500 mt-4">{{ error }}</div>
-  </ng-container>
+    @if (error) {
+      <div class="text-red-500 mt-4">{{ error }}</div>
+    }
+  }
 
   <!-- Actual Content -->
-  <ng-container *ngIf="!isLoading && !error">
+  @if (!isLoading && !error) {
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let project of projectsData; let i = index" class="card relative group bg-[#131313] group flex flex-col h-full border border-neutral-700 shadow-sm shadow-neutral-700/70 rounded-xl transition-colors duration-250 hover:bg-[#1A202C]">
-        <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)">
-          <a [href]="project.githubUrl" target="_blank" class="flex flex-col">
-            <div class="flex flex-col card-img-container relative shadow-sm rounded-t-xl">
-              <img loading="lazy" [src]="'assets/img/'+ project.title.translations.en +'.avif'" alt="Project image for {{ project.title.translations.en }}" class="object-cover w-full h-[28rem] shadow-sm rounded-t-xl" height="200" width="300">
-              <div class="absolute inset-0 bg-[#000000] opacity-0 group-hover:opacity-50 transition-opacity"></div>
-            </div>
-            <h2 class="card-title neon-color-full text-xl font-bold mt-4">{{ project.title.translations.en }}</h2>
-          </a>
-          <p class="card-description text-[#dddddd] mt-2">{{ project.description.translations.en }}</p>
+      @for (project of projectsData; track project; let i = $index) {
+        <div class="card relative group bg-[#131313] group flex flex-col h-full border border-neutral-700 shadow-sm shadow-neutral-700/70 rounded-xl transition-colors duration-250 hover:bg-[#1A202C]">
+          <div (mouseout)="toggleImageHoverEffect(i)" (mouseover)="toggleImageHoverEffect(i)">
+            <a [href]="project.githubUrl" target="_blank" class="flex flex-col">
+              <div class="flex flex-col card-img-container relative shadow-sm rounded-t-xl">
+                <img loading="lazy" [src]="'assets/img/'+ project.title.translations.en +'.avif'" alt="Project image for {{ project.title.translations.en }}" class="object-cover w-full h-[28rem] shadow-sm rounded-t-xl" height="200" width="300">
+                <div class="absolute inset-0 bg-[#000000] opacity-0 group-hover:opacity-50 transition-opacity"></div>
+              </div>
+              <h2 class="card-title neon-color-full text-xl font-bold mt-4">{{ project.title.translations.en }}</h2>
+            </a>
+            <p class="card-description text-[#dddddd] mt-2">{{ project.description.translations.en }}</p>
+          </div>
         </div>
-      </div>
+      }
     </div>
-  </ng-container>
+  }
 </div>

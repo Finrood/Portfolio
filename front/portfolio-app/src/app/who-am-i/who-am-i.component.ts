@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, finalize, throwError } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProfileService } from '../service/profile.service';
-import {NgForOf, NgIf} from "@angular/common";
+
 
 @Component({
     selector: 'app-who-am-i',
@@ -16,10 +16,7 @@ import {NgForOf, NgIf} from "@angular/common";
             ]),
         ]),
     ],
-    imports: [
-        NgIf,
-        NgForOf
-    ]
+    imports: []
 })
 export class WhoAmIComponent implements OnInit {
   profileData: any;
