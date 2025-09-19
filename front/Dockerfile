@@ -1,9 +1,9 @@
 # Build stage
 FROM node:22-alpine AS build
 WORKDIR /app/portfolio-app
-# Copy package files and install dependencies
+# Copy package files and install all dependencies (including devDependencies)
 COPY portfolio-app/package*.json ./
-RUN npm install --production --silent
+RUN npm install --silent
 # Copy source and build
 COPY portfolio-app .
 ARG NODE_ENV=production
@@ -29,5 +29,5 @@ COPY --from=build /app/dist /app/dist
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup && \
     chown -R appuser:appgroup /app/dist
 USER appuser
-# No server needed; just keep the container alive to populate the volume
+# Keep container running to populate the volume
 CMD ["tail", "-f", "/dev/null"]
