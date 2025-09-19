@@ -1,23 +1,33 @@
-FROM node:22 AS build
+# Build stage
+FROM node:22-alpine AS build
 WORKDIR /app/portfolio-app
+# Copy package files and install dependencies
 COPY portfolio-app/package*.json ./
-RUN npm install --silent
+RUN npm install --production --silent
+# Copy source and build
 COPY portfolio-app .
-# Build the application
 ARG NODE_ENV=production
 ARG BUILD_TIMESTAMP
-RUN echo "NODE_ENV is set to $NODE_ENV" # Print NODE_ENV
-RUN npm run build -- --configuration=$NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
+RUN echo "Building with NODE_ENV=${NODE_ENV}"
+RUN npm run build -- --configuration=${NODE_ENV}
+# Copy built assets to /app/dist
+RUN mkdir -p /app/dist && \
+    if [ -d "dist/portfolio-app/browser" ]; then \
+        cp -r dist/portfolio-app/browser/* /app/dist/; \
+    elif [ -d "dist" ]; then \
+        cp -r dist/* /app/dist/; \
+    else \
+        echo "Error: No build output found"; exit 1; \
+    fi
 
-# Create a script to copy files
-RUN echo '#!/bin/sh\n\
-if [ -d "/app/portfolio-app/dist/portfolio-app/browser" ]; then\n\
-  cp -r /app/portfolio-app/dist/portfolio-app/browser/* /app/dist/\n\
-  echo "Files copied successfully"\n\
-else\n\
-  echo "Source directory does not exist"\n\
-fi\n\
-exec "$@"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["npm", "start"]
+# Final stage (minimal runtime to populate volume)
+FROM alpine:3.20
+WORKDIR /app
+COPY --from=build /app/dist /app/dist
+# Use a non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup && \
+    chown -R appuser:appgroup /app/dist
+USER appuser
+# No server needed; just keep the container alive to populate the volume
+CMD ["tail", "-f", "/dev/null"]
