@@ -32,13 +32,15 @@
               "node_modules/preline/preline.js"
             ],
             "server": "src/main.server.ts",
-            "prerender": true,
+            "prerender": false,
             "ssr": {
               "entry": "server.ts"
             }
           },
           "configurations": {
             "development": {
+              "ssr": false,
+              "prerender": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
