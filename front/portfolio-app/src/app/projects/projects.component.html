@@ -8,40 +8,52 @@
     </p>
   </div>
 
-  <div *ngIf="isLoading || error" class="flex justify-center items-center">
-    <div *ngIf="isLoading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-      <!-- Skeleton Card -->
-      <div *ngFor="let item of [1,2,3]" class="bg-gray-800 rounded-xl shadow-lg overflow-hidden animate-pulse border border-gray-700">
-        <div class="w-full h-60 bg-gray-700"></div>
-        <div class="p-6">
-          <div class="h-8 bg-gray-700 rounded w-3/4 mb-4"></div>
-          <div class="h-5 bg-gray-700 rounded mb-2"></div>
-          <div class="h-5 bg-gray-700 rounded w-5/6"></div>
+  @if (isLoading || error) {
+    <div class="flex justify-center items-center">
+      @if (isLoading) {
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+          <!-- Skeleton Card -->
+          @for (item of [1,2,3]; track item) {
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden animate-pulse border border-gray-700">
+              <div class="w-full h-60 bg-gray-700"></div>
+              <div class="p-6">
+                <div class="h-8 bg-gray-700 rounded w-3/4 mb-4"></div>
+                <div class="h-5 bg-gray-700 rounded mb-2"></div>
+                <div class="h-5 bg-gray-700 rounded w-5/6"></div>
+              </div>
+            </div>
+          }
         </div>
-      </div>
+      }
+      @if (error) {
+        <div class="text-red-500">
+          <p>Error loading projects. Please try again later.</p>
+          <p>{{ error }}</p>
+        </div>
+      }
     </div>
-    <div *ngIf="error" class="text-red-500">
-      <p>Error loading projects. Please try again later.</p>
-      <p>{{ error }}</p>
-    </div>
-  </div>
+  }
 
-  <div *ngIf="!isLoading && !error" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 animate-fade-in-up animation-delay-300">
-    <div *ngFor="let project of projectsData" class="relative group bg-gray-800 rounded-xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border border-gray-700 hover:border-purple-500">
-      <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" class="block">
-        <div class="relative h-60 w-full overflow-hidden">
-          <img [src]="'assets/img/' + project.title.translations.en + '.avif'" [alt]="project.title.translations.en" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500 flex items-end p-6">
-            <h3 class="text-3xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-yellow-400 transition-all duration-500">{{ project.title.translations.en }}</h3>
-          </div>
-          <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <p class="text-white text-xl font-bold border-2 border-white px-6 py-3 rounded-full group-hover:border-purple-400 group-hover:text-purple-400 transition-all duration-300">View on GitHub</p>
-          </div>
+  @if (!isLoading && !error) {
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 animate-fade-in-up animation-delay-300">
+      @for (project of projectsData; track project) {
+        <div class="relative group bg-gray-800 rounded-xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border border-gray-700 hover:border-purple-500">
+          <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" class="block">
+            <div class="relative h-60 w-full overflow-hidden">
+              <img [src]="'assets/img/' + project.title.translations.en + '.avif'" [alt]="project.title.translations.en" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500 flex items-end p-6">
+                <h3 class="text-3xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-yellow-400 transition-all duration-500">{{ project.title.translations.en }}</h3>
+              </div>
+              <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <p class="text-white text-xl font-bold border-2 border-white px-6 py-3 rounded-full group-hover:border-purple-400 group-hover:text-purple-400 transition-all duration-300">View on GitHub</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-400 text-lg">{{ project.description.translations.en }}</p>
+            </div>
+          </a>
         </div>
-        <div class="p-6">
-          <p class="text-gray-400 text-lg">{{ project.description.translations.en }}</p>
-        </div>
-      </a>
+      }
     </div>
-  </div>
+  }
 </div>

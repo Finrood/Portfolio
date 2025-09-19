@@ -9,13 +9,13 @@ interface Project {
   githubUrl: string;
 }
 
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
-  imports: [CommonModule]
+  imports: []
 })
 export class ProjectsComponent implements OnInit {
   projectsData: Project[] = [];

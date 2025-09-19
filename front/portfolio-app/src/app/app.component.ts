@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WhoAmIComponent } from "./who-am-i/who-am-i.component";
 import { ProjectsComponent } from "./projects/projects.component";
 import { ContactComponent } from "./contact/contact.component";
-import { NgIf } from "@angular/common";
+
 
 @Component({
   selector: 'app-root',
@@ -10,9 +10,8 @@ import { NgIf } from "@angular/common";
   imports: [
     WhoAmIComponent,
     ProjectsComponent,
-    ContactComponent,
-    NgIf
-  ],
+    ContactComponent
+],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {

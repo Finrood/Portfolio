@@ -1,13 +1,15 @@
-<div class="flex justify-center items-center h-screen bg-gray-950" *ngIf="loading">
-  <div class="relative flex items-center justify-center w-32 h-32">
-    <div class="absolute animate-spin rounded-full h-full w-full border-t-4 border-b-4 border-purple-500"></div>
-    <div class="absolute animate-ping rounded-full h-2/3 w-2/3 border-t-4 border-b-4 border-pink-500"></div>
-    <svg class="h-1/2 w-1/2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-    </svg>
+@if (loading) {
+  <div class="flex justify-center items-center h-screen bg-gray-950">
+    <div class="relative flex items-center justify-center w-32 h-32">
+      <div class="absolute animate-spin rounded-full h-full w-full border-t-4 border-b-4 border-purple-500"></div>
+      <div class="absolute animate-ping rounded-full h-2/3 w-2/3 border-t-4 border-b-4 border-pink-500"></div>
+      <svg class="h-1/2 w-1/2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+    </div>
   </div>
-</div>
+}
 
 <div class="min-h-screen text-white bg-gradient-to-br from-gray-950 to-black animate-gradient-shift">
   <header class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-950 to-indigo-950 bg-opacity-90 backdrop-blur-lg shadow-2xl border-b border-purple-700">
@@ -37,11 +39,13 @@
         </button>
       </div>
     </nav>
-    <div *ngIf="mobileMenuOpen" class="md:hidden bg-gradient-to-r from-purple-950 to-indigo-950 bg-opacity-95 shadow-inner">
-      <a (click)="scrollToSection('who-am-i'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-purple-800 transition-colors duration-300">About</a>
-      <a (click)="scrollToSection('projects'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-indigo-800 transition-colors duration-300">Projects</a>
-      <a (click)="scrollToSection('contact'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-green-800 transition-colors duration-300">Contact</a>
-    </div>
+    @if (mobileMenuOpen) {
+      <div class="md:hidden bg-gradient-to-r from-purple-950 to-indigo-950 bg-opacity-95 shadow-inner">
+        <a (click)="scrollToSection('who-am-i'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-purple-800 transition-colors duration-300">About</a>
+        <a (click)="scrollToSection('projects'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-indigo-800 transition-colors duration-300">Projects</a>
+        <a (click)="scrollToSection('contact'); mobileMenuOpen = false" class="block py-4 px-8 text-lg text-white hover:bg-green-800 transition-colors duration-300">Contact</a>
+      </div>
+    }
   </header>
 
   <main class="container mx-auto px-6 pt-40">

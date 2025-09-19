@@ -1,14 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   imports: [
-    FormsModule,
-    CommonModule
-  ],
+    FormsModule
+],
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
