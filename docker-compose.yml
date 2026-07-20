@@ -1,0 +1,22 @@
+services:
+  portfolio-front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - caddy-network
+
+  portfolio-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=local-h2
+    networks:
+      - caddy-network
+
+networks:
+  caddy-network:
+    external: true

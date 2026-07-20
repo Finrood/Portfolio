@@ -1,43 +1,40 @@
-# Build stage
+# Stage 1: Build
 FROM node:22-alpine AS build
-
-WORKDIR /app/portfolio-app
-
-# Copy package files and install all dependencies (including devDependencies)
-COPY portfolio-app/package*.json ./
-RUN npm ci --only=production --silent || npm install --silent
-
-# Copy source and build
-COPY portfolio-app .
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-# Build the application
-RUN echo "Building with NODE_ENV=${NODE_ENV}" && \
-    npm run build -- --configuration=${NODE_ENV} && \
-    mkdir -p /app/dist && \
-    if [ -d "dist/portfolio-app/browser" ]; then \
-        cp -r dist/portfolio-app/browser/* /app/dist/; \
-    elif [ -d "dist" ]; then \
-        cp -r dist/* /app/dist/; \
-    else \
-        echo "Error: No build output found" && exit 1; \
-    fi
-
-# Final stage (minimal runtime to populate volume)
-FROM alpine:3.20
-
 WORKDIR /app
 
-# Copy built assets
-COPY --from=build --chown=1000:1000 /app/dist /app/dist
+# Copy package files
+COPY portfolio-app/package*.json ./
+RUN npm install
 
-# Use a non-root user (uid/gid 1000 for consistency)
-RUN addgroup -g 1000 -S appgroup && \
-    adduser -u 1000 -S appuser -G appgroup
+# Copy source
+COPY portfolio-app/ .
 
-USER appuser
+# Build WITHOUT prerendering to save resources and avoid the timeout error
+RUN npm run build -- --configuration=production --prerender false
 
-# Keep container running to populate the volume
-CMD ["tail", "-f", "/dev/null"]
+# Stage 2: Serve
+FROM nginx:1.27-alpine
+
+# Remove default nginx HTML files to prevent conflicts
+RUN rm -rf /usr/share/nginx/html/*
+
+# Angular 17+ outputs to dist/[project-name]/browser
+# Based on your logs, the folder is indeed portfolio-app
+COPY --from=build /app/dist/portfolio-app/browser /usr/share/nginx/html
+
+# Rename index.csr.html to index.html if it exists and index.html doesn't
+RUN if [ -f /usr/share/nginx/html/index.csr.html ] && [ ! -f /usr/share/nginx/html/index.html ]; then \
+        cp /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html; \
+    fi
+
+# Custom Nginx config to handle Angular routing (SPA)
+RUN echo 'server { \
+    listen 80; \
+    location / { \
+        root /usr/share/nginx/html; \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
